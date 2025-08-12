@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Treasure Hunter Game</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 20px;
+      background-color: white;
+    }
+    
+    .container {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 20px;
+      background-color: white;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
+    
+    h1 {
+      color: black;
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    
+    .game-board {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    
+    table {
+      border-collapse: collapse;
+      margin: 20px 0;
+    }
+    
+    td {
+      width: 60px;
+      height: 60px;
+      text-align: center;
+      vertical-align: middle;
+      border: 2px solid black;
+      font-size: 24px;
+      cursor: pointer;
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      transition: background-color 0.2s;
+    }
+    
+    td:hover {
+      background-color: #ecf0f1;
+    }
+    
+    #endSetupButton {
+      padding: 10px 20px;
+      font-size: 16px;
+      cursor: pointer;
+      background-color: #cc2e2e;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      margin-top: 10px;
+      transition: background-color 0.3s;
+    }
+    
+    #endSetupButton:hover {
+      background-color: #ff4400;
+    }
+    
+    #endPlayButton {
+      padding: 10px 20px;
+      font-size: 16px;
+      cursor: pointer;
+      background-color: #cc2e2e;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      margin-top: 10px;
+      transition: background-color 0.3s;
+    }
+    
+    #endPlayButton:hover {
+      background-color: #ff4400;
+    }
+    
+    #moveButton {
+      padding: 5px 15px;
+      font-size: 14px;
+      cursor: pointer;
+      background-color: #3498db;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      transition: background-color 0.3s;
+    }
+    
+    #moveButton:hover {
+      background-color: #2980b9;
+    }
+    
+    #movementInput {
+      padding: 5px 10px;
+      font-size: 16px;
+      border: 1px solid #bdc3c7;
+      border-radius: 5px;
+      margin-right: 10px;
+    }
+    
+    #playContainer, #gameOverContainer {
+      display: none;
+      margin-top: 20px;
+      border-top: 1px solid #ecf0f1;
+      padding-top: 20px;
+      text-align: center;
+    }
+    
+    .status-panel {
+      display: flex;
+      justify-content: space-around;
+      flex-wrap: wrap;
+      margin-bottom: 20px;
+      padding: 10px;
+      background-color: #f8f9fa;
+      border-radius: 5px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    }
+    
+    .status-item {
+      padding: 10px;
+      margin: 5px;
+      min-width: 120px;
+      border-radius: 5px;
+      background-color: #e9ecef;
+    }
+    
+    .status-item h3 {
+      margin: 0 0 5px 0;
+      font-size: 14px;
+      color: #6c757d;
+    }
+    
+    .status-item p {
+      margin: 0;
+      font-size: 20px;
+      font-weight: bold;
+      color: #343a40;
+    }
+
+    .movement-controls {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-top: 15px;
+    }
+    
+    .game-result {
+      padding: 20px;
+      margin-top: 20px;
+      background-color: #f1f1f1;
+      border-radius: 5px;
+      font-size: 18px;
+    }
+    
+    .legend {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin: 20px 0;
+      gap: 15px;
+    }
+    
+    .legend-item {
+      display: flex;
+      align-items: center;
+      margin: 0 10px;
+    }
+    
+    .legend-icon {
+      width: 30px;
+      height: 30px;
+      margin-right: 10px;
+      background-size: cover;
+      background-position: center;
+    }
+    
+    @media (max-width: 768px) {
+      td {
+        width: 40px;
+        height: 40px;
+      }
+      
+      .status-item {
+        min-width: 100px;
+      }
+    }
+    
+    @media (max-width: 480px) {
+      td {
+        width: 30px;
+        height: 30px;
+      }
+      
+      .container {
+        padding: 10px;
+      }
+      
+      .status-panel {
+        flex-direction: column;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Treasure Hunter Game</h1>
+    <div class="legend">
+      <div class="legend-item">
+        <div class="legend-icon" style="background-image: url('./Hunter.png');"></div>
+        <span>Hunter</span>
+      </div>
+      <div class="legend-item">
+        <div class="legend-icon" style="background-image: url('./Monster.png');"></div>
+        <span>Monster</span>
+      </div>
+      <div class="legend-item">
+        <div class="legend-icon" style="background-image: url('./Obstacle.png');"></div>
+        <span>Obstacle</span>
+      </div>
+      <div class="legend-item">
+        <div class="legend-icon" style="background-image: url('./Treasure.png');"></div>
+        <span>Treasure</span>
+      </div>
+    </div>
+    
+    <div class="game-board">
+      <table id="randomTable"></table>
+      <button id="endSetupButton">End Setup Stage</button>
+    </div>
+    
+    <div id="playContainer">
+      <div class="status-panel">
+        <div class="status-item">
+          <h3>Round</h3>
+          <p id="roundDisplay">1</p>
+        </div>
+        <div class="status-item">
+          <h3>Treasures Left</h3>
+          <p id="treasuresDisplay">0</p>
+        </div>
+        <div class="status-item">
+          <h3>Your Score</h3>
+          <p id="playerScoreDisplay">0</p>
+        </div>
+        <div class="status-item">
+          <h3>Monster Score</h3>
+          <p id="computerScoreDisplay">0</p>
+        </div>
+      </div>
+      
+      <div class="movement-controls">
+        <input type="text" id="movementInput" placeholder="Type w/a/s/d" maxlength="1">
+        <button id="moveButton">Move</button>
+      </div>
+      
+      <button id="endPlayButton">End Game</button>
+    </div>
+    
+    <div id="gameOverContainer">
+      <h2>Game Over</h2>
+      <div class="game-result">
+        <p id="gameResult"></p>
+        <p id="finalScores"></p>
+      </div>
+    </div>
+  </div>
+  <script src="game.js"></script>
+</body>
+</html>
